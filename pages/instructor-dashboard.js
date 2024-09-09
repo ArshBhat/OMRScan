@@ -17,7 +17,7 @@ const InstructorDashboard = () => {
       <ul className={styles.courseList}>
         {courses.map((course) => (
           <li key={course.id}>
-            <Link href={`/courses/${course.id}`}>{course.name}</Link>
+            <Link href={`/course-management?courseId=${course.id}`}>{course.name}</Link>
           </li>
         ))}
       </ul>

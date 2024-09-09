@@ -1,3 +1,4 @@
+// components/Header.js
 import React from 'react';
 import styles from '../styles/Header.module.css';
 
@@ -13,6 +14,7 @@ const Header = () => {
           <li><a href="/courses">Courses</a></li>
           <li><a href="/exams">Exams</a></li>
           <li><a href="/login">Login</a></li>
+          <li><a href="/register">Register</a></li>
         </ul>
       </nav>
     </header>

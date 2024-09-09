@@ -1,5 +1,6 @@
 // components/Header.js
 import React from 'react';
+import Link from 'next/link';
 import styles from '../styles/Header.module.css';
 
 const Header = () => {
@@ -10,11 +11,12 @@ const Header = () => {
       </div>
       <nav className={styles.nav}>
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/courses">Courses</a></li>
-          <li><a href="/exams">Exams</a></li>
-          <li><a href="/login">Login</a></li>
-          <li><a href="/register">Register</a></li>
+          <li><Link href="/">Home</Link></li>
+          <li><Link href="/courses">Courses</Link></li>
+          <li><Link href="/exams">Exams</Link></li>
+          <li><Link href="/login">Login</Link></li>
+          <li><Link href="/register">Register</Link></li>
+          <li><Link href="/instructor-dashboard">Instructor Dashboard</Link></li>
         </ul>
       </nav>
     </header>

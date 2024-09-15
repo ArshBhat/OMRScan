@@ -1,16 +1,42 @@
-// pages/register.js
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import styles from '../styles/Auth.module.css';
 
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle registration logic here
-    console.log('Register:', { email, password, confirmPassword });
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert(result.message); // Show success message
+        router.push('/login'); // Redirect to login page
+      } else {
+        alert(result.message); // Show error message
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred. Please try again later.'); // Show generic error message
+    }
   };
 
   return (

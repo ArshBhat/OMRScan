@@ -1,16 +1,37 @@
-// pages/login.js
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styles from '../styles/Auth.module.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Login:', { email, password });
+
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert(result.message); // Show success message
+        router.push('/'); // Redirect to index page
+      } else {
+        alert(result.message); // Show error message
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred. Please try again later.'); // Show generic error message
+    }
   };
 
   return (

@@ -1,14 +1,34 @@
 // pages/forgot-password.js
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import styles from '../styles/Auth.module.css';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle password recovery logic here
-    console.log('Password recovery email sent to:', email);
+    setMessage('Sending recovery email...');
+    try {
+      const response = await fetch('/api/forgot-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+      if (response.ok) {
+        setMessage('A password recovery email has been sent to your email address. Please check your inbox.');
+        router.push(`/reset-password?email=${encodeURIComponent(email)}`);
+      } else {
+        setMessage('Failed to send recovery email. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setMessage('Error sending recovery email. Please try again.');
+    }
   };
 
   return (
@@ -26,6 +46,7 @@ const ForgotPassword = () => {
         </div>
         <button type="submit">Send Recovery Email</button>
       </form>
+      {message && <p>{message}</p>}
     </div>
   );
 };
